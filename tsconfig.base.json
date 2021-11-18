@@ -14,7 +14,13 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@blubits/orders": ["libs/orders/src/index.ts"],
+      "@blubits/products": ["libs/products/src/index.ts"],
+      "@blubits/ui": ["libs/ui/src/index.ts"],
+      "@blubits/users": ["libs/users/src/index.ts"],
+      "@env/*":["environments/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
