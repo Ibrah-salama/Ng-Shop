@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriesService, Category } from '@blubits/products';
 import { MessageService } from 'primeng/api';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService} from 'primeng/api';
 import { Router } from '@angular/router'
 
 @Component({
