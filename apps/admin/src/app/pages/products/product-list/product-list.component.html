@@ -18,7 +18,8 @@
         <div class="grid">
             <div class="col-12">
                 <p-toast></p-toast>
-                <p-table [value]="products" styleClass="p-datatable-gridlines"  responsiveLayout="scroll"  sortMode="multiple">
+                <p-table [paginator]="true" [pageLinks]="3" [rows]="3" [showCurrentPageReport]="true" [totalRecords]="10"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" [value]="products" styleClass="p-datatable-gridlines"  responsiveLayout="scroll">
                     <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="name">Name  <p-sortIcon field="name"></p-sortIcon></th>
@@ -27,13 +28,13 @@
                             <th pSortableColumn="stock">Stock  <p-sortIcon field="stock"></p-sortIcon></th>
                             <th pSortableColumn="category">Category  <p-sortIcon field="category"></p-sortIcon></th>
                             <th pSortableColumn="created">Created At  <p-sortIcon field="created"></p-sortIcon></th>
-                            <th></th>
+                            <th>Actions</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-product>
                         <tr>
                             <td>{{product.name}}</td>
-                            <td><img [src]="product.image" style="width:100%"></td>
+                            <td><img [src]="product.image" style="width:60%"></td>
                             <!-- <td><img src="http://localhost:3000/public/uploads/monica-jpg-1637274886677.jpeg" style="width:100%"></td> -->
                             <!-- <td>{{product.image}}</td> -->
                             <td>{{product.price}}</td>
@@ -45,6 +46,12 @@
                                 <p-button (click)="updateProduct(product._id)" styleClass="p-button-succss" icon="pi pi-pencil"></p-button>
                             </td>
                         </tr>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorleft">
+                        <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorright">
+                        <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
                     </ng-template>
                 </p-table>
             </div>
