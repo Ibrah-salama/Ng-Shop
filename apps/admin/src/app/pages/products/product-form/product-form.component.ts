@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ProductsService, Product } from '@blubits/products';
+import { ProductsService } from '@blubits/products';
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
 import { timer } from 'rxjs';
@@ -48,7 +48,7 @@ export class ProductFormComponent implements OnInit {
   }
 private _getCategories(){
   this.categoryService.getCategories().subscribe(res=>{
-    this.categories = res
+    this.categories = res.data
   })
 }
   private _initForm() {

@@ -1,5 +1,8 @@
 <div class="admin-page">
-    <p-card header="Categories" subheader="List of all products">
+    <div *ngIf="isLoading" style="text-align: center;margin:auto; margin-top: 20%;">
+        <admin-spinner ></admin-spinner>
+    </div>
+    <p-card header="Products" subheader="List of all products" *ngIf="!isLoading">
         <div class="grid">
             <div class="col-12">
                 <p-toolbar>

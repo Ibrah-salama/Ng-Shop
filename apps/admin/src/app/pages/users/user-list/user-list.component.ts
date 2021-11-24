@@ -1,55 +1,67 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ProductsService, Product } from '@blubits/products';
+import { UsersService, User } from '@blubits/users';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'admin-product-list',
-  templateUrl: './product-list.component.html',
+  selector: 'admin-user-list',
+  templateUrl: './user-list.component.html',
   styles: [],
 })
-export class ProductListComponent implements OnInit,OnDestroy {
-  products: Product[] = [];
-  isLoading=false
+
+export class UserListComponent implements OnInit,OnDestroy {
+  users:User[]=[]
+  countries:any=[]
   endSub$:Subject<boolean> = new Subject()
   constructor(
+    private usersService: UsersService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private productsService: ProductsService,
     private router: Router
-  ) {}
+    ) {}
 
   ngOnInit(): void {
-    this._getProducts();
+   this._getUsers()
   }
   ngOnDestroy(){
     this.endSub$.next()
     this.endSub$.complete()
   }
-  deleteProduct(productId: string) {
+
+  private _getUsers(){
+    this.usersService.getUsers().pipe(takeUntil(this.endSub$)).subscribe((res)=>{
+      this.users = res.data
+    })
+  }
+
+  getCountryName(countryKey: string) {
+    return this.usersService.getCountry(countryKey);
+  }
+
+  deleteUser(userId: string) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete this category?',
       header: 'Delete category',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         // this.messageService.add({severity:'info', summary:'Confirmed', detail:'You have accepted'});
-        this.productsService.deleteProduct(productId).subscribe(
+        this.usersService.deleteUser(userId).subscribe(
           () => {
-            this._getProducts();
+            this._getUsers();
             this.messageService.add({
               severity: 'success',
               summary: 'Deleted',
-              detail: `Product Deleted successfully :D`,
+              detail: `User Deleted successfully :D`,
             });
           },
           () => {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: `Product failed to Delete!`,
+              detail: `User failed to Delete!`,
             });
           }
         );
@@ -57,18 +69,8 @@ export class ProductListComponent implements OnInit,OnDestroy {
       reject: () => {},
     });
   }
-  updateProduct(productId: string) {
-      this.router.navigateByUrl(`products/form/${productId}`)
-  }
 
-  private _getProducts() {
-    this.isLoading=true
-    this.productsService.getProducts().pipe(takeUntil(this.endSub$)).subscribe((res) => {
-      this.products = res.data;
-      this.isLoading=false
-      // for( let i =0; i<this.products.length; i++){
-      //   console.log(this.products[i].image)
-      // }
-    });
-  }
+  updateUser(userId: string) {
+    this.router.navigateByUrl(`/users/form/${userId}`)
+}
 }

@@ -1,0 +1,56 @@
+<div class="admin-page">
+    <p-card header="Users" subheader="List of all users">
+        <div class="grid">
+            <div class="col-12">
+                <p-toolbar>
+                    <div class="p-toolbar-group-left">
+                        <p-button label="New" icon="pi pi-plus" styleClass="p-button-success" routerLink="form">
+                        </p-button>
+                    </div>
+                    <div class="p-toolbar-group-right">
+                        <p-button icon="pi pi-search"></p-button>
+                        <p-button icon="pi pi-calendar" styleClass="p-button-success"></p-button>
+                        <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+                    </div>
+                </p-toolbar>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col-12">
+                <p-toast></p-toast>
+                <p-table [paginator]="true" [pageLinks]="3" [rows]="3" [showCurrentPageReport]="true" [totalRecords]="10"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" [value]="users" styleClass="p-datatable-gridlines"  responsiveLayout="scroll">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="name">Name  <p-sortIcon field="name"></p-sortIcon></th>
+                            <th pSortableColumn="email">Email  <p-sortIcon field="email"></p-sortIcon></th>
+                            <th pSortableColumn="phone">Phone  <p-sortIcon field="phone"></p-sortIcon></th>
+                            <th pSortableColumn="country">Country  <p-sortIcon field="country"></p-sortIcon></th>
+                            <th pSortableColumn="isAdmin">Is Admin <p-sortIcon field="isAdmin"></p-sortIcon></th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-user>
+                        <tr>
+                            <td>{{user?.name}}</td>
+                            <td>{{user?.email}}</td>
+                            <!-- <td><img src="http://localhost:3000/public/uploads/monica-jpg-1637274886677.jpeg" style="width:100%"></td> -->
+                            <!-- <td>{{product.image}}</td> -->
+                            <td>{{user?.phone}}</td>
+                            <td>{{ getCountryName(user?.country) }}</td>
+                            <td>
+                                <p-tag *ngIf="user?.isAdmin"  icon="pi pi-check" severity="success" [rounded]="true" ></p-tag> 
+                                <p-tag *ngIf="!user?.isAdmin"  icon="pi pi-user" severity="danger" [rounded]="true"></p-tag>
+                            <td>
+                                <p-button (click)="deleteUser(user.id)" styleClass="p-button-danger mr-2" icon="pi pi-trash"></p-button>
+                                <p-button (click)="updateUser(user.id)" styleClass="p-button-succss" icon="pi pi-pencil"></p-button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+    </p-card>
+</div>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>

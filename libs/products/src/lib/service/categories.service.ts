@@ -12,8 +12,8 @@ export class CategoriesService {
   // apitUrlCategories = "http://localhost:3000/api/v1/categories"
   constructor(private http:HttpClient) { }
 
-  getCategories():Observable<Category[]>{
-    return this.http.get<Category[]>(this.apitUrlCategories)
+  getCategories():Observable<{status:string,data:Category[]}>{
+    return this.http.get<{status:string,data:Category[]}>(this.apitUrlCategories)
   }
 
   createCategory(category:Category):Observable<{status:string,data:Category}>{

@@ -1,43 +1,46 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CategoriesService, Category } from '@blubits/products';
+import { OrderService, Order } from '@blubits/orders';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService} from 'primeng/api';
 import { Router } from '@angular/router'
+import { ORDER_STATUS } from '../order.constant';
 import { Subject } from 'rxjs';
-import { takeUntil } from "rxjs/operators"
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
-  selector: 'admin-categories-lisst',
-  templateUrl: './categories-lisst.component.html',
-  styleUrls: ['./categories-lisst.component.scss'],
+  selector: 'admin-order-list',
+  templateUrl: './order-list.component.html',
 })
-export class CategoriesLisstComponent implements OnInit,OnDestroy {
-  categories: Category[] = [];
+export class OrderListComponent implements OnInit,OnDestroy {
+  orders: Order[] = [];
   endSub$:Subject<boolean> = new Subject()
+  orderStatus:{[key:string]:{label:string,color:string}}=ORDER_STATUS
   constructor(
     private messageService: MessageService,
-    private categoriesService: CategoriesService,
+    private ordersService: OrderService,
     private confirmationService:ConfirmationService,
     private router:Router
-    ) {}
+    ) {
+    }
 
   ngOnInit(): void {
-    this._getCategories()
+    this._getOrders()
   }
   ngOnDestroy(){
     this.endSub$.next()
     this.endSub$.complete()
   }
-  deleteCategory(categoryId: string) {
+  deleteOrder(orderId: string) {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete this category?',
-      header: 'Delete category',
+      message: 'Are you sure that you want to delete this order?',
+      header: 'Delete order',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
           // this.messageService.add({severity:'info', summary:'Confirmed', detail:'You have accepted'});
-          this.categoriesService.deleteCategory(categoryId).subscribe(
+          this.ordersService.deleteOrder(orderId).subscribe(
             () => {
-              this._getCategories()
+              this._getOrders()
               this.messageService.add({
                 severity: 'success',
                 summary: 'Deleted',
@@ -59,18 +62,13 @@ export class CategoriesLisstComponent implements OnInit,OnDestroy {
 
    
   }
-  updateCategory(categoryId: string) {
-    this.router.navigateByUrl(`categories/form/${categoryId}`)
+  showOrder(orderId: string) {
+    this.router.navigateByUrl(`orders/${orderId}`)
   }
 
-  private _getCategories(){
-    // issue with takeUntil 
-      this.categoriesService.getCategories().pipe(takeUntil(this.endSub$)).subscribe((res) => {
-      this.categories = res.data;
+  private _getOrders(){
+    this.ordersService.getOrders().pipe(takeUntil(this.endSub$)).subscribe((res) => {
+      this.orders = res.data;
     });
-
-    // this.categoriesService.getCategories().subscribe((res) => {
-    //   this.categories = res.data;
-    // });
   }
 }
