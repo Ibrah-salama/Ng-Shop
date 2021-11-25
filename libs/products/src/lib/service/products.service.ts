@@ -28,4 +28,8 @@ export class ProductsService{
     updateProduct(productId:string, product:FormData):Observable<{status:string, data:Product}>{
         return this.http.patch<{status:string, data:Product}>(`${this.productsUrl}/${productId}`,product)
     }
+
+    getFeaturedProducts(count:number):Observable<{status:string,featuredProducts:Product[]}>{
+        return this.http.get<{status:string,featuredProducts:Product[]}>(`${this.productsUrl}/get/featured/${count}`)
+    }
 }

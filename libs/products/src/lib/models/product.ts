@@ -1,4 +1,4 @@
-import { Category } from "@blubits/products";
+import { Category } from "./category";
 
 export class Product {
   id?: string;
