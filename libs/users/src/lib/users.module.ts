@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 const routes: Routes = [{ path: 'login', component: LoginComponent }];
 
-export const usersRoutes: Route[] = [];
+
 
 @NgModule({
   imports: [

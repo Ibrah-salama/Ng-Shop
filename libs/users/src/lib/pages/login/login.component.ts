@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LocalstorageService } from '../../services/localstorage.service';
 
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private localStorageService:LocalstorageService
+    private localStorageService:LocalstorageService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -55,8 +57,8 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (res) => {
           this.authError = false;
-          console.log(res);
           this.localStorageService.setToken(res.token)
+          this.router.navigate(['/'])
         },
         (error: HttpErrorResponse) => {
           console.log(error);

@@ -8,8 +8,7 @@ import { takeUntil } from "rxjs/operators"
 
 @Component({
   selector: 'admin-categories-lisst',
-  templateUrl: './categories-lisst.component.html',
-  styleUrls:['categories-lisst.component.scss']
+  templateUrl: './categories-lisst.component.html'
 })
 export class CategoriesLisstComponent implements OnInit,OnDestroy {
   categories: Category[] = [];

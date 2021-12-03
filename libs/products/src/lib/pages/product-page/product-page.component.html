@@ -1,0 +1,43 @@
+<p-toast styleClass="custom-toast"></p-toast>
+<div class="product-page" >
+    <div class="grid">
+        <div class="col-6">
+            <ui-gallary [images]="product.images!" [selectedImageURL]="product.image!"></ui-gallary>
+        </div>
+        <div class="col-6 product" *ngIf="product">
+            <h2 class="product-name">{{product.name}}</h2>
+            <div class="product-desc">
+                {{product.description}}
+            </div>
+            <div class="product-rating">
+                <p-rating [ngModel]="product.rating" [readonly]="true" [stars]="5" [cancel]="false"></p-rating>
+            </div>
+            <div class="product-price">
+                {{product.price | currency}}
+                <span class="price-before">
+                    {{product.price! + 20 | currency}}
+                </span>
+            </div>
+            <div class="product-quantity">
+                <div class="field col-12 md-3 p-0">
+                    <label for="quantity">Quantity</label><br>
+                    <p-inputNumber [(ngModel)]="quantity" inputId="quantity" [showButtons]="true" inputId="quantity"
+                        mode="decimal" [min]="1" [max]="100">
+                    </p-inputNumber>
+                </div>
+            </div>
+            <div class="product-action">
+                <button pButton pRipple type="button" label="Buy Now" class="p-button-rounded mr-2" (click)="addProductToCart()">
+                </button>
+                <button pButton pRipple type="button" label="Add to cart" class="p-button-rounded mr-2" (click)="addProductToCart()">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="grid product-rich-description">
+        <div class="col-12">
+            <div [innerHTML]="product.richDescription"></div>
+        </div>
+    </div>
+</div>
+<ng-template #elseBlock>Content to render when condition is false.</ng-template>

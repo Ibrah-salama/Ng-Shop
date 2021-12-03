@@ -9,8 +9,7 @@ import { CategoriesService, Category } from '@blubits/products';
 
 @Component({
   selector: 'admin-categories-form',
-  templateUrl: './categories-form.component.html',
-  styleUrls: ['./categories-form.component.scss'],
+  templateUrl: './categories-form.component.html'
 })
 export class CategoriesFormComponent implements OnInit {
   isSubmitted = false;

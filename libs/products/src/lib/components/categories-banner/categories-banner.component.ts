@@ -23,7 +23,6 @@ export class CategoriesBannerComponent implements OnInit,OnDestroy {
 
   private _getCategories(){
     this.cateoriesService.getCategories().pipe(takeUntil(this.endSub$)).subscribe(res=>{
-      console.log(res.data);
       this.categories=res.data
     })
   }

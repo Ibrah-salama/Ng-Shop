@@ -7,8 +7,7 @@ import { takeUntil } from 'rxjs/operators'
 
 @Component({
   selector: 'admin-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit,OnDestroy {
   totalSales=0

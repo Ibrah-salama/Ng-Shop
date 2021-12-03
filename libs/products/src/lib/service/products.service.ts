@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { environment } from '@env/environment'
 import { Observable } from 'rxjs'
@@ -12,8 +12,12 @@ export class ProductsService{
     // productsUrl = "https://e-backen.herokuapp.com/api/v1/products"
     constructor(private http:HttpClient){
     }
-    getProducts():Observable<{state:string, data:Product[]}>{
-        return this.http.get<{state:string, data:Product[]}>(this.productsUrl)
+    getProducts(categories?:string[]):Observable<{state:string, data:Product[]}>{
+        let params = new HttpParams()
+        if(categories){
+          params = params.append('categories',categories.join(','))
+        }
+        return this.http.get<{state:string, data:Product[]}>(this.productsUrl,{params:params})
     }
 
     deleteProduct(productId:string):Observable<{status:string,data:null}>{
