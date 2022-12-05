@@ -16,16 +16,16 @@ export class AuthGuardGuard implements CanActivate {
 
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const token = this.localtorageService.getToken()
-    if(token){
-      const decodedData = JSON.parse(atob(token.split('.')[1]))
-      if(decodedData.isAdmin && !this._tokenExpired(decodedData.exp)){ 
-        return true 
-      }
-      return true 
-    }
-      this.router.navigate(["/login"])
-      return false;
+    // const token = this.localtorageService.getToken()
+    // if(token){
+    //   const decodedData = JSON.parse(atob(token.split('.')[1]))
+    //   if(decodedData.isAdmin && !this._tokenExpired(decodedData.exp)){ 
+    //     return true 
+    //   }
+    //   return true 
+    // }
+    //   this.router.navigate(["/login"])
+      return true;
   }
   private _tokenExpired(expirationData:number):boolean{
     return Math.floor(new Date().getTime()/1000)>=expirationData
